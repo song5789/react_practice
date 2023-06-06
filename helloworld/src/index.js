@@ -5,24 +5,17 @@ import "./index.css";
 // props(부모 컴포넌트에서 자식으로 데이터 전송)
 // state(자신의 값을 저장)
 
-class Square extends React.Component {
-  render() {
-    return (
-      <button
-        className="square"
-        onClick={() => {
-          this.props.onClick;
-        }}
-      >
-        {this.props.value}
-      </button>
-    );
-  }
+function Square(props) {
+  return (
+    <button className="square" onClick={props.onClick}>
+      {props.value}
+    </button>
+  );
 }
 
 class Board extends React.Component {
   renderSquare(i) {
-    return <Square value={this.props.squares[i]} handlerCilck={() => this.props.handlerCilck(i)} />;
+    return <Square value={this.props.squares[i]} onClick={() => this.props.onClick(i)} />;
   }
 
   render() {
@@ -62,11 +55,11 @@ class Game extends React.Component {
     };
   }
 
-  handlerCilck(i) {
+  handleClick(i) {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
-    if (caculateWinner(squares) || squares[i]) {
+    if (calculateWinner(squares) || squares[i]) {
       return;
     }
     squares[i] = this.state.xIsNext ? "X" : "O";
@@ -77,7 +70,7 @@ class Game extends React.Component {
         },
       ]),
       stepNumber: history.length,
-      xIsNext: !this.status.xIsNext,
+      xIsNext: !this.state.xIsNext,
     });
   }
 
@@ -91,7 +84,7 @@ class Game extends React.Component {
   render() {
     const history = this.state.history;
     const current = history[this.state.stepNumber];
-    const winner = caculateWinner(current.squares);
+    const winner = calculateWinner(current.squares);
 
     const moves = history.map((step, move) => {
       const desc = move ? "Go to move #" + move : "Go to game start";
@@ -112,7 +105,7 @@ class Game extends React.Component {
     return (
       <div className="game">
         <div className="game-board">
-          <Board squares={current.squares} onClick={(i) => this.handlerCilck(i)} />
+          <Board squares={current.squares} onClick={(i) => this.handleClick(i)} />
         </div>
         <div className="game-info">
           <div>{status}</div>
@@ -124,11 +117,11 @@ class Game extends React.Component {
 }
 
 // ========================================
-console.log(ReactDOM);
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(<Game />);
 
-function caculateWinner(squares) {
+function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],
     [3, 4, 5],
