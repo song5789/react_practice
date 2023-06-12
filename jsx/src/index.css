@@ -12,3 +12,14 @@ code {
 .line-style {
   border-color: red;
 }
+
+.correct {
+  background-color: #32e674;
+}
+.wrong {
+  background-color: #f54538;
+}
+
+input[type="text"] {
+  outline: none;
+}

@@ -1,29 +1,44 @@
-import React from "react";
+import React, { Component } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
-import Side, { Side2 } from "./Side";
-import Func, { Func2 } from "./Func";
-import Props from "./Props";
+import FuncEvent from "./FuncEvent";
+import Event from "./Event";
+import IsCorrect from "./IsCorrect";
 
 // 컴포넌트로 구성하면 재사용율이 높고, 관리가 쉬워짐.
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
+class World extends Component {
+  render() {
+    return (
+      <div>
+        <h1>Hello, {this.props.who}</h1>
+      </div>
+    );
+  }
+}
+
+function Hello(props) {
+  return (
+    <div>
+      <h1>Hello! {props.who}</h1>
+    </div>
+  );
+}
+
+const SayTo = (props) => {
+  return (
+    <div>
+      <h1>Say! {props.to}</h1>
+    </div>
+  );
+};
+
 root.render(
   <>
-    <App />
-    <Func />
-    <Func2 />
-    <Props name="고길동" age={28} />
-  </>
-);
-
-const side = ReactDOM.createRoot(document.getElementById("side"));
-side.render(
-  <>
-    <ol>
-      <Side />
-    </ol>
-    <Side2 />
+    <World who="홍길동" />
+    <Hello who="Function!" />
+    <SayTo to="마길동" />
   </>
 );
