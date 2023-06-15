@@ -1,11 +1,11 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 function User({ user, onRemove, onToggle }) {
   return (
     <div>
       <b onClick={() => onToggle(user.id)} style={{ cursor: "pointer", color: user.active ? "green" : "black" }}>
         {user.username}
-      </b>{" "}
+      </b>
       <span>({user.email})</span>
       <button onClick={() => onRemove(user.id)}>삭제</button>
     </div>
