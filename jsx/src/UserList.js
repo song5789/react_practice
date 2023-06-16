@@ -1,20 +1,26 @@
-function User({ user, onRemove }) {
+function User({ user, onRemove, onToggle }) {
   return (
     <div>
-      <b>{user.username}</b>
+      <b style={{ color: user.active && "green", cursor: "pointer" }} onClick={() => onToggle(user.id)}>
+        {user.username}
+      </b>
       <span> {user.email}</span>
-      <button onClick={() => onRemove(user.id)}>삭제</button>
+      <button style={{ position: "relative", zIndex: 1 }} onClick={() => onRemove(user.id)}>
+        삭제
+      </button>
     </div>
   );
 }
 
-function UserList({ users, onRemove }) {
+function UserList({ users, onRemove, onToggle }) {
   return (
-    <div>
-      {users.map((user) => (
-        <User user={user} key={user.id} onRemove={onRemove} />
-      ))}
-    </div>
+    <>
+      <div>
+        {users.map((user) => (
+          <User user={user} key={user.id} onRemove={onRemove} onToggle={onToggle} />
+        ))}
+      </div>
+    </>
   );
 }
 
