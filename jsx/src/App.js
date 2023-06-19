@@ -1,38 +1,30 @@
 import logo from "./logo.svg";
 import "./App.css";
 import UserList from "./UserList";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import CreateUser from "./CreateUser";
 import UserModify from "./UserModify";
 
 function App() {
+  const [show, setShow] = useState(true);
+
   const [inputs, setInputs] = useState({
     username: "",
     email: "",
   });
 
   const { username, email } = inputs;
+  let array = [];
+  for (let i = 0; i < 100; i++) {
+    array.push({
+      id: i,
+      username: "홍길동" + i,
+      email: "gildong" + i + "@sample.com",
+      active: false,
+    });
+  }
 
-  const [users, setUsers] = useState([
-    {
-      id: 1,
-      username: "velopert",
-      email: "public.velopert@gamil.com",
-      active: false,
-    },
-    {
-      id: 2,
-      username: "tester",
-      email: "tester@example.com",
-      active: false,
-    },
-    {
-      id: 3,
-      username: "liz",
-      email: "liz@example.com",
-      active: false,
-    },
-  ]);
+  const [users, setUsers] = useState(array);
 
   const nextId = useRef(4);
 
@@ -44,7 +36,7 @@ function App() {
       active: false,
     };
 
-    setUsers(users.concat(user));
+    setUsers((users) => users.concat(user));
 
     setInputs({
       username: "",
@@ -52,18 +44,15 @@ function App() {
     });
 
     nextId.current += 1;
-  }, [users, username, email]);
+  }, [username, email]);
 
-  const onChange = useCallback(
-    (e) => {
-      const { name, value } = e.target;
-      setInputs({
-        ...inputs,
-        [name]: value,
-      });
-    },
-    [inputs]
-  );
+  const onChange = useCallback((e) => {
+    const { name, value } = e.target;
+    setInputs((inputs) => ({
+      ...inputs,
+      [name]: value,
+    }));
+  }, []);
 
   const onRemove = useCallback(
     (id) => {
@@ -75,14 +64,18 @@ function App() {
   const onToggle = useCallback(
     (id) => {
       setUsers(users.map((item) => (item.id === id ? { ...item, active: !item.active } : item)));
+      window.scrollTo(0, 0);
     },
     [users]
   );
 
-  const onModify = (id) => {
-    let modUser = users.map((item) => (item.id === id ? { ...item, username, email } : item));
-    setUsers(modUser);
-  };
+  const onModify = useCallback(
+    (id) => {
+      let modUser = users.map((item) => (item.id === id ? { ...item, username, email } : item));
+      setUsers(modUser);
+    },
+    [users, inputs]
+  );
 
   const inputArea = [];
   users.forEach((item) => {
@@ -97,13 +90,26 @@ function App() {
     }
   };
 
+  const countActUsers = (users) => {
+    console.log("활성화 유저 계산중");
+    return users.filter((item) => item.active).length;
+  };
+
   const chkAct = useMemo(() => isActivate(users), [users]);
+  const countAct = useMemo(() => countActUsers(users), [users]);
 
   return (
     <>
       {inputArea}
       {chkAct ? null : <CreateUser username={username} email={email} onChange={onChange} onCreate={onCreate} />}
-      <UserList users={users} i onRemove={onRemove} onToggle={onToggle} />
+      {show ? <UserList users={users} countAct={countAct} onRemove={onRemove} onToggle={onToggle} /> : null}
+      <button
+        onClick={() => {
+          setShow(!show);
+        }}
+      >
+        show toggle
+      </button>
     </>
   );
 }

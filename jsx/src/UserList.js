@@ -1,10 +1,11 @@
+import React, { useEffect } from "react";
 function User({ user, onRemove, onToggle }) {
   return (
     <div>
       <b style={{ color: user.active && "green", cursor: "pointer" }} onClick={() => onToggle(user.id)}>
         {user.username}
       </b>
-      <span> {user.email}</span>
+      <span> ({user.email}) </span>
       <button style={{ position: "relative", zIndex: 1 }} onClick={() => onRemove(user.id)}>
         삭제
       </button>
@@ -12,9 +13,10 @@ function User({ user, onRemove, onToggle }) {
   );
 }
 
-function UserList({ users, onRemove, onToggle }) {
+function UserList({ users, onRemove, onToggle, countAct }) {
   return (
     <>
+      <div>활성화된 유저수: {countAct}</div>
       <div>
         {users.map((user) => (
           <User user={user} key={user.id} onRemove={onRemove} onToggle={onToggle} />
@@ -24,4 +26,4 @@ function UserList({ users, onRemove, onToggle }) {
   );
 }
 
-export default UserList;
+export default React.memo(UserList);

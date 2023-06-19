@@ -21,6 +21,6 @@ const PRODUCTS = [
 
 root.render(
   <>
-    <MyTodo />
+    <App />
   </>
 );
