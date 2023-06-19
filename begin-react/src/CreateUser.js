@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 function CreateUser({ username, email, onChange, onCreate, nameInput }) {
   return (
@@ -9,4 +9,4 @@ function CreateUser({ username, email, onChange, onCreate, nameInput }) {
     </div>
   );
 }
-export default CreateUser;
+export default React.memo(CreateUser);
