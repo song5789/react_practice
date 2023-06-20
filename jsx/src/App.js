@@ -1,86 +1,77 @@
 import logo from "./logo.svg";
 import "./App.css";
 import UserList from "./UserList";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useMemo, useReducer } from "react";
 import CreateUser from "./CreateUser";
 import UserModify from "./UserModify";
 
-function App() {
-  const [show, setShow] = useState(true);
-
-  const [inputs, setInputs] = useState({
+const initialState = {
+  show: true,
+  inputs: {
     username: "",
     email: "",
-  });
-
-  const { username, email } = inputs;
-  let array = [];
-  for (let i = 0; i < 100; i++) {
-    array.push({
-      id: i,
-      username: "홍길동" + i,
-      email: "gildong" + i + "@sample.com",
+  },
+  users: [
+    {
+      id: 1,
+      username: "velopert",
+      email: "velopert@example.com",
       active: false,
-    });
+    },
+  ],
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "CREATE_USER":
+      return {
+        ...state,
+        users: state.users.concat(action.user),
+      };
+    case "TOGGLE_USER":
+      return {
+        ...state,
+        users: state.users.map((user) => (user.id === action.id ? { ...user, active: !user.active } : user)),
+      };
+    case "REMOVE_USER":
+      return {
+        ...state,
+        users: state.users.filter((user) => user.id !== action.id),
+      };
+    case "TOGGLE_SHOW":
+      return {
+        ...state,
+        show: !state.show,
+      };
+    case "UPDATE_USER":
+      return {
+        ...state,
+        users: state.users.map((user) => (user.id === action.id ? { ...user, username: action.username, email: action.email } : user)),
+      };
+    default:
+      return state;
   }
+}
 
-  const [users, setUsers] = useState(array);
+export const UserDispatch = React.createContext(null);
 
-  const nextId = useRef(4);
+function App() {
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const onCreate = useCallback(() => {
-    const user = {
-      id: nextId.current,
-      username,
-      email,
-      active: false,
-    };
+  const { users, show } = state;
 
-    setUsers((users) => users.concat(user));
-
-    setInputs({
-      username: "",
-      email: "",
+  const onToggle = useCallback((id) => {
+    dispatch({
+      type: "TOGGLE_USER",
+      id,
     });
-
-    nextId.current += 1;
-  }, [username, email]);
-
-  const onChange = useCallback((e) => {
-    const { name, value } = e.target;
-    setInputs((inputs) => ({
-      ...inputs,
-      [name]: value,
-    }));
+    window.scrollTo(0, 0);
   }, []);
-
-  const onRemove = useCallback(
-    (id) => {
-      setUsers(users.filter((user) => user.id !== id));
-    },
-    [users]
-  );
-
-  const onToggle = useCallback(
-    (id) => {
-      setUsers(users.map((item) => (item.id === id ? { ...item, active: !item.active } : item)));
-      window.scrollTo(0, 0);
-    },
-    [users]
-  );
-
-  const onModify = useCallback(
-    (id) => {
-      let modUser = users.map((item) => (item.id === id ? { ...item, username, email } : item));
-      setUsers(modUser);
-    },
-    [users, inputs]
-  );
 
   const inputArea = [];
   users.forEach((item) => {
     if (item.active) {
-      inputArea.push(<UserModify inputs={inputs} user={item} key={item.id} onChange={onChange} onModify={onModify} onToggle={onToggle} />);
+      inputArea.push(<UserModify user={item} key={item.id} onToggle={onToggle} />);
     }
   });
 
@@ -99,18 +90,18 @@ function App() {
   const countAct = useMemo(() => countActUsers(users), [users]);
 
   return (
-    <>
-      {inputArea}
-      {chkAct ? null : <CreateUser username={username} email={email} onChange={onChange} onCreate={onCreate} />}
-      {show ? <UserList users={users} countAct={countAct} onRemove={onRemove} onToggle={onToggle} /> : null}
+    <UserDispatch.Provider value={dispatch}>
+      <div>활성화된 유저수: {countAct}</div>
+      {chkAct ? inputArea : <CreateUser />}
+      {show ? <UserList users={users} countAct={countAct} onToggle={onToggle} /> : null}
       <button
         onClick={() => {
-          setShow(!show);
+          dispatch({ type: "TOGGLE_SHOW" });
         }}
       >
         show toggle
       </button>
-    </>
+    </UserDispatch.Provider>
   );
 }
 

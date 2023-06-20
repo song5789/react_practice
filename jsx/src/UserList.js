@@ -1,5 +1,17 @@
-import React, { useEffect } from "react";
-function User({ user, onRemove, onToggle }) {
+import React, { useCallback, useContext, useEffect } from "react";
+import { UserDispatch } from "./App";
+function User({ user, onToggle }) {
+  const dispatch = useContext(UserDispatch);
+
+  const onRemove = useCallback(
+    (id) => {
+      dispatch({
+        type: "REMOVE_USER",
+        id,
+      });
+    },
+    [dispatch]
+  );
   return (
     <div>
       <b style={{ color: user.active && "green", cursor: "pointer" }} onClick={() => onToggle(user.id)}>
@@ -13,13 +25,12 @@ function User({ user, onRemove, onToggle }) {
   );
 }
 
-function UserList({ users, onRemove, onToggle, countAct }) {
+function UserList({ users, onToggle }) {
   return (
     <>
-      <div>활성화된 유저수: {countAct}</div>
       <div>
         {users.map((user) => (
-          <User user={user} key={user.id} onRemove={onRemove} onToggle={onToggle} />
+          <User user={user} key={user.id} onToggle={onToggle} />
         ))}
       </div>
     </>
