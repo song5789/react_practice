@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useRef } from "react";
-import useInputs from "./useInputs";
+import React, { useCallback, useContext, useEffect, useRef } from "react";
+import useInputs from "./hooks/useInputs";
 import { UserDispatch } from "./App";
 
 function CreateUser() {
@@ -12,7 +12,7 @@ function CreateUser() {
   const nextId = useRef(4);
   const dispatch = useContext(UserDispatch);
 
-  const onCreate = () => {
+  const onCreate = useCallback(() => {
     dispatch({
       type: "CREATE_USER",
       user: {
@@ -25,7 +25,7 @@ function CreateUser() {
     reset();
     nextId.current++;
     nameInput.current.focus();
-  };
+  }, [dispatch, username, email]);
 
   return (
     <div>
