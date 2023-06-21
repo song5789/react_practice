@@ -53,6 +53,16 @@ function reducer(state, action) {
   }
 }
 
+function isActivate(arr) {
+  for (let item of arr) {
+    if (Object.values(item).includes(true)) return true;
+  }
+}
+
+function countActUsers(arr) {
+  return arr.filter((item) => item.active).length;
+}
+
 export const UserDispatch = React.createContext(null);
 
 function App() {
@@ -74,17 +84,6 @@ function App() {
       inputArea.push(<UserModify user={item} key={item.id} onToggle={onToggle} />);
     }
   });
-
-  const isActivate = (users) => {
-    for (let user of users) {
-      if (Object.values(user).includes(true)) return true;
-    }
-  };
-
-  const countActUsers = (users) => {
-    console.log("활성화 유저 계산중");
-    return users.filter((item) => item.active).length;
-  };
 
   const chkAct = useMemo(() => isActivate(users), [users]);
   const countAct = useMemo(() => countActUsers(users), [users]);

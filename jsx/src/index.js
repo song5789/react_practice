@@ -4,6 +4,7 @@ import "./index.css";
 
 import App from "./App";
 import MyTodo from "./MyTodo";
+import Box from "./Box";
 
 // 컴포넌트로 구성하면 재사용율이 높고, 관리가 쉬워짐.
 
@@ -21,6 +22,6 @@ const PRODUCTS = [
 
 root.render(
   <>
-    <App />
+    <Box />
   </>
 );
