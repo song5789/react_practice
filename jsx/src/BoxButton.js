@@ -6,8 +6,11 @@ function BoxButton() {
 
   const changeColor = (e) => {
     const { value } = e.target;
+
     setMyStyle((myStyle) => ({
       ...myStyle,
+      width: Math.floor(Math.random() * (500 - 100) + 100),
+      height: Math.floor(Math.random() * (500 - 100) + 100),
       backgroundColor: value,
     }));
   };
