@@ -2,9 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 
-import App from "./App";
-import MyTodo from "./MyTodo";
-import Box from "./Box";
+import Button from "./components/Button";
 
 // 컴포넌트로 구성하면 재사용율이 높고, 관리가 쉬워짐.
 
@@ -21,7 +19,64 @@ const PRODUCTS = [
 */
 
 root.render(
-  <>
-    <Box />
-  </>
+  <div className="App">
+    <div className="buttons">
+      <Button size={"large"} onClick={() => console.log("Click!")}>
+        Button
+      </Button>
+      <Button>Button</Button>
+      <Button size={"small"}>Button</Button>
+    </div>
+    <div className="buttons">
+      <Button size={"large"} color="gray">
+        Button
+      </Button>
+      <Button color="gray">Button</Button>
+      <Button size={"small"} color="gray">
+        Button
+      </Button>
+    </div>
+    <div className="buttons">
+      <Button size={"large"} color="pink">
+        Button
+      </Button>
+      <Button color="pink">Button</Button>
+      <Button size={"small"} color="pink">
+        Button
+      </Button>
+    </div>
+    <div className="buttons">
+      <Button size={"large"} color="blue" outline>
+        Button
+      </Button>
+      <Button color="gray" outline>
+        Button
+      </Button>
+      <Button size={"small"} color="pink" outline>
+        Button
+      </Button>
+    </div>
+    <div className="buttons">
+      <Button size={"large"} color="blue" fullWidth>
+        Button
+      </Button>
+      <Button size={"large"} color="gray" fullWidth>
+        Button
+      </Button>
+      <Button size={"large"} color="pink" fullWidth>
+        Button
+      </Button>
+    </div>
+    <div className="buttons">
+      <Button size={"large"} color="blue" fullWidth outline>
+        Button
+      </Button>
+      <Button size={"large"} color="gray" fullWidth outline>
+        Button
+      </Button>
+      <Button size={"large"} color="pink" fullWidth outline>
+        Button
+      </Button>
+    </div>
+  </div>
 );
