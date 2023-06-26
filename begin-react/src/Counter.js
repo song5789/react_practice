@@ -1,35 +1,38 @@
-import React, { useReducer, useState } from "react";
+import React, { Component } from "react";
 
-function reducer(state, action) {
-  switch (action.type) {
-    case "INCREMENT":
-      return state + 1;
-    case "DECREMENT":
-      return state - 1;
-    default:
-      return state;
+class Counter extends Component {
+  state = {
+    number: 0,
+    fixed: 1,
+  };
+
+  up = () => {
+    this.setState(
+      (state) => ({
+        number: this.state.number + 1,
+      }),
+      () => {
+        console.log(this.state.number);
+      }
+    );
+  };
+
+  down = () => {
+    this.setState((state) => ({
+      number: this.state.number - 1,
+    }));
+  };
+
+  render() {
+    return (
+      <div>
+        <h1>{this.state.number}</h1>
+        <button onClick={this.up}>+1</button>
+        <button onClick={this.down}>-1</button>
+        <p>고정된 값: {this.state.fixed}</p>
+      </div>
+    );
   }
-}
-
-function Counter() {
-  // const [number, setNumber] = useState(0);
-  const [number, dispatch] = useReducer(reducer, 0);
-
-  const onIncrease = () => {
-    // setNumber((prevNumber) => prevNumber + 1);
-    dispatch({ type: "INCREMENT" });
-  };
-  const onDecrease = () => {
-    // setNumber((prevNumber) => prevNumber - 1);
-    dispatch({ type: "DECREMENT" });
-  };
-  return (
-    <div>
-      <h1>{number}</h1>
-      <button onClick={onIncrease}>+1</button>
-      <button onClick={onDecrease}>-1</button>
-    </div>
-  );
 }
 
 export default Counter;
