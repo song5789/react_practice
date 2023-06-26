@@ -1,0 +1,51 @@
+.checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox label {
+  cursor: pointer;
+}
+
+/* 기존 input 을 숨기는 CSS */
+.checkbox input {
+  width: 0;
+  height: 0;
+  position: absolute;
+  opacity: 0;
+}
+
+.checkbox span {
+  font-size: 1.124rem;
+  font-weight: bold;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
+  margin-right: 0.25rem;
+  color: #adb5bd;
+}
+
+.checked {
+  color: #339af0;
+}
+
+.icon2 {
+  font-size: 5rem;
+}
+
+.my-component {
+  animation: rotate 2s infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
