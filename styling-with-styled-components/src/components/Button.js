@@ -21,7 +21,7 @@ const colorStyles = css`
           border: 1px solid ${selected};
           &:hover {
             background: ${selected};
-            color: white !important;
+            color: white;
           }
           &:active {
             background: ${darken(0.1, selected)};
@@ -33,19 +33,13 @@ const colorStyles = css`
 
 const fullWidthStyle = css`
   ${(props) => {
-    if (props.fullWidth && props.fullWidth === true)
+    if (props.fullWidth === true)
       return css`
         width: 100%;
         justify-content: center;
-        &.fullgaro + &.fullgaro {
-          margin-left: 0;
-          margin-top: 1rem;
-        }
-      `;
-    else
-      return css`
-        & + & {
-          margin-left: 1rem;
+        &:not(:first-child) {
+          margin-left: 0 !important;
+          margin-top: 1rem !important;
         }
       `;
   }}
@@ -92,12 +86,16 @@ const StyledButton = styled.button`
   /* 색상 */
   ${colorStyles}
 
+  & + & {
+    margin-left: 1rem;
+  }
+
   ${fullWidthStyle}
 `;
 
 function Button({ children, color, size, outline, fullWidth, ...rest }) {
   return (
-    <StyledButton color={color} size={size} outline={outline} fullWidth={fullWidth} className={fullWidth ? "fullgaro" : ""} {...rest}>
+    <StyledButton color={color} size={size} outline={outline} fullWidth={fullWidth} {...rest}>
       {children}
     </StyledButton>
   );

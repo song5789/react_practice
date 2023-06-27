@@ -24,7 +24,8 @@ function App() {
           gray: "#495057",
           pink: "#f06595",
         },
-      }}>
+      }}
+    >
       <AppBlock>
         <ButtonGroup>
           <Button size="large">BUTTON</Button>
@@ -61,13 +62,13 @@ function App() {
           </Button>
         </ButtonGroup>
         <ButtonGroup>
-          <Button size="large" fullWidth>
+          <Button size="large" fullWidth={true}>
             BUTTON
           </Button>
-          <Button color="gray" size="large" fullWidth>
+          <Button color="gray" size="large" fullWidth={true}>
             BUTTON
           </Button>
-          <Button color="pink" size="large" fullWidth>
+          <Button color="pink" size="large" fullWidth={true}>
             BUTTON
           </Button>
         </ButtonGroup>
