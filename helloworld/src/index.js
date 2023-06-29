@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import GetUserInfo from "./GetUserInfo";
 
 // props(부모 컴포넌트에서 자식으로 데이터 전송)
 // state(자신의 값을 저장)
@@ -119,7 +120,7 @@ class Game extends React.Component {
 // ========================================
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<Game />);
+root.render(<GetUserInfo />);
 
 function calculateWinner(squares) {
   const lines = [
