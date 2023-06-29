@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styled, { css } from "styled-components";
+import React, { useEffect, useState } from "react";
+import styled, { css, keyframes } from "styled-components";
 import { MdAdd } from "react-icons/md";
 
 const CircleButton = styled.button`
@@ -46,11 +46,23 @@ const CircleButton = styled.button`
     `}
 `;
 
+const slideUp = keyframes`
+0%{
+  opacity:0;
+  transform: translateY(10px);
+}
+100%{
+  opacity:1;
+  transform: translateY(0);
+}
+`;
+
 const InsertFormPositioner = styled.div`
   width: 100%;
   bottom: 0;
   left: 0;
   position: absolute;
+  animation: ${slideUp} 0.25s;
 `;
 
 const InsertForm = styled.form`
