@@ -1,0 +1,29 @@
+.cb {
+  width: 916px;
+  height: 75px;
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid black;
+}
+.cb div {
+  width: calc(100% / 8);
+  font-size: 1.175rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.cb div:hover {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.cb .active {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-decoration: none;
+  background: rgba(0, 0, 0, 0.2);
+}

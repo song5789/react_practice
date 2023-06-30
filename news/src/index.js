@@ -5,4 +5,4 @@ import App from "./App";
 import NewsList from "./NewsList";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<NewsList />);
+root.render(<App />);

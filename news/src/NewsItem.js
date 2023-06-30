@@ -46,6 +46,27 @@ function NewsItem({ article }) {
     e.target.src = "https://placehold.co/160x160?text=NO+IMAGE";
   };
 
+  if (urlToImage === null) {
+    return (
+      <NewsItemBlock>
+        {
+          <div className="thumbnail">
+            <a href={url} target="_blank" rel="noopener noreferrer">
+              <img src="https://placehold.co/160x160?text=NO+IMAGE" onError={onError} alt={title} />
+            </a>
+          </div>
+        }
+        <div className="contents">
+          <h2>
+            <a href={url} target="_blank" rel="noopener noreferrer">
+              {title}
+            </a>
+          </h2>
+          <p>{description}</p>
+        </div>
+      </NewsItemBlock>
+    );
+  }
   return (
     <NewsItemBlock>
       {urlToImage && (
