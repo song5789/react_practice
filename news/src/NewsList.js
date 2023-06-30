@@ -8,6 +8,13 @@ const NewsListBlock = styled.div`
   margin: 0 auto;
 `;
 
+const LoadingBlock = styled.div`
+  width: 920px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+`;
+
 function NewsList({ category }) {
   const [articles, setArticles] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -28,7 +35,7 @@ function NewsList({ category }) {
   }, [category]);
 
   if (!loading) {
-    return "로딩 중....";
+    return <LoadingBlock>로딩중...</LoadingBlock>;
   }
 
   if (!articles) {

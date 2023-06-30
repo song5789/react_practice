@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import axios from "../node_modules/axios/index";
+import NewsItemWithImg from "./NewsItemWithImg";
+import NewsItemNoImg from "./NewsItemNoImg";
 
 const NewsItemBlock = styled.div`
   display: flex;
@@ -43,38 +45,15 @@ function NewsItem({ article }) {
   const { title, description, url, urlToImage } = article;
 
   const onError = (e) => {
-    e.target.src = "https://placehold.co/160x160?text=NO+IMAGE";
+    e.target.src = "https://placehold.co/160x160?text=ACCESS+DENIED";
   };
 
-  if (urlToImage === null) {
-    return (
-      <NewsItemBlock>
-        {
-          <div className="thumbnail">
-            <a href={url} target="_blank" rel="noopener noreferrer">
-              <img src="https://placehold.co/160x160?text=NO+IMAGE" onError={onError} alt={title} />
-            </a>
-          </div>
-        }
-        <div className="contents">
-          <h2>
-            <a href={url} target="_blank" rel="noopener noreferrer">
-              {title}
-            </a>
-          </h2>
-          <p>{description}</p>
-        </div>
-      </NewsItemBlock>
-    );
-  }
   return (
     <NewsItemBlock>
-      {urlToImage && (
-        <div className="thumbnail">
-          <a href={url} target="_blank" rel="noopener noreferrer">
-            <img src={urlToImage} onError={onError} alt={title} />
-          </a>
-        </div>
+      {urlToImage ? (
+        <NewsItemWithImg title={title} url={url} urlToImage={urlToImage} onError={onError} />
+      ) : (
+        <NewsItemNoImg title={title} url={url} onError={onError} />
       )}
       <div className="contents">
         <h2>
