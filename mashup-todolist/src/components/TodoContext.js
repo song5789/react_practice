@@ -28,8 +28,8 @@ function todoReducer(state, action) {
     case "CREATE":
       return state.concat(action.todo);
     case "TOGGLE":
-      return state.map((todo) => (todo.id === action.id ? { ...todo, action: !todo.done } : todo));
-    case "RENMOVE":
+      return state.map((todo) => (todo.id === action.id ? { ...todo, done: !todo.done } : todo));
+    case "REMOVE":
       return state.filter((todo) => todo.id !== action.id);
     default:
       throw new Error("Unhadled action type: ${action.type}");

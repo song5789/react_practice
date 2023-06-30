@@ -24,12 +24,36 @@ const TodoHeadBlock = styled.div`
 
 function TodoHead() {
   const todos = useTodoState();
-  console.log(todos);
+  const undoneTasks = todos.filter((todo) => !todo.done);
+
+  const today = new Date();
+  const dateString = today.toLocaleDateString("ko-kr", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+  const dayName = today.toLocaleDateString("ko-kr", {
+    weekday: "long",
+  });
+
+  function isWeekend(day) {
+    switch (day) {
+      case "토요일":
+        return "#1e51c7";
+      case "일요일":
+        return "#ed1539";
+      default:
+        return "#868e96";
+    }
+  }
+
   return (
     <TodoHeadBlock>
-      <h1>2022년 6월 28일</h1>
-      <div className="day">수요일</div>
-      <div className="task-left">할 일 2개 남음</div>
+      <h1>{dateString}</h1>
+      <div className="day" style={{ color: isWeekend(dayName) }}>
+        <b>{dayName}</b>
+      </div>
+      <div className="task-left">할 일 {undoneTasks.length}개 남음</div>
     </TodoHeadBlock>
   );
 }
