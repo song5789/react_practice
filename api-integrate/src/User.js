@@ -29,7 +29,7 @@ function User({ id }) {
           <b>Company:</b> {user.company.name} <br />
           <b>Catch Phrase:</b> {user.company.catchPhrase}
           <br />
-          <b>{user.bs}</b>
+          <b>{user.company.bs}</b>
         </p>
       </div>
       <p>
